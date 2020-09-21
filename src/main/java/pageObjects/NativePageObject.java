@@ -11,6 +11,33 @@ public class NativePageObject  {
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
     WebElement signInBtn;
 
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_button")
+    WebElement regBtn;
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_email")
+    WebElement regEmailField;
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_username")
+    WebElement regUserNameField;
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_password")
+    WebElement regPasswordField;
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_confirm_password")
+    WebElement regConfirmPasswordField;
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_new_account_button")
+    WebElement regNewAccBtn;
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_email")
+    WebElement signInEmailField;
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_pwd")
+    WebElement signInPasswordField;
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/action_bar")
+    WebElement actionBar;
+
     public NativePageObject(AppiumDriver appiumDriver) {
         PageFactory.initElements( new AppiumFieldDecorator(appiumDriver), this);
     }

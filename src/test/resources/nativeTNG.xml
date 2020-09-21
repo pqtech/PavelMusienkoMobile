@@ -1,9 +1,16 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Native mobile testing Suite">
     <parameter name="appType" value="native"></parameter>
-    <parameter name="deviceName" value="emulator-5554"></parameter>
+    <parameter name="deviceName" value="Pixel 2"></parameter>
+    <parameter name="udid" value="emulator-5554"></parameter>
     <parameter name="platformName" value="Android"></parameter>
     <parameter name="app" value="./src/main/resources/EPAMTestApp.apk"></parameter>
+    <parameter name="userEmail" value="myTestRandomEmail@email.com"></parameter>
+    <parameter name="userName" value="myTestUserName"></parameter>
+    <parameter name="userPassword" value="12345test"></parameter>
+    <parameter name="budgetPageName" value="BudgetActivity"></parameter>
+    <parameter name="actionBarId" value="platkovsky.alexey.epamtestapp:id/action_bar"></parameter>
+    <parameter name="budgetPageNameClass" value="android.widget.TextView"></parameter>
     <test name="Native tests">
         <groups>
             <run>
