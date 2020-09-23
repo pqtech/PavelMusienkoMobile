@@ -10,7 +10,8 @@ import setup.BaseTest;
 
 public class nativeMobileTests extends BaseTest {
 
-    @Test(priority = 0, groups = {"native"}, description = "This simple test just click on the Sign In button")
+    @Test(enabled = false, priority = 0, groups = {"native"},
+            description = "This simple test just click on the Sign In button")
     public void simpleNativeTest() throws IllegalAccessException, NoSuchFieldException, InstantiationException {
         getPo().getWelement("signInBtn").click();
         System.out.println("Simplest Android native test done");
@@ -31,10 +32,12 @@ public class nativeMobileTests extends BaseTest {
         System.out.println("Registering a new Account native test done");
     }
 
-    @Parameters({"userEmail", "userPassword", "budgetPageName", "actionBarId", "budgetPageNameClass"})
+    @Parameters({"userEmail", "userPassword", "budgetPageName", "actionBarId",
+            "budgetPageNameClass", "platformName"})
     @Test(priority = 2, groups = {"native"}, description = "Sign in with a registered account")
-    public void SignInAccountNativeTest(String userEmail, String userPassword, String budgetPageName,
-                                        String actionBarId, String budgetPageNameClass)
+    public void SignInAccountNativeTest(String userEmail, String userPassword,
+                                        String budgetPageName, String actionBarId,
+                                        String budgetPageNameClass, String platformName)
             throws IllegalAccessException, NoSuchFieldException, InstantiationException {
 
         // Perform signing in actions
@@ -42,15 +45,19 @@ public class nativeMobileTests extends BaseTest {
         getPo().getWelement("signInPasswordField").sendKeys(userPassword);
         getPo().getWelement("signInBtn").click();
 
-        // Making sure that the Budged page has loaded
-        new WebDriverWait(getDriver(), 1)
-                .until(ExpectedConditions.presenceOfElementLocated(By.id(actionBarId)));
+        if (platformName.equals("Android")) {
+            // Making sure that the Budged page has loaded
+            new WebDriverWait(getDriver(), 1)
+                    .until(ExpectedConditions.presenceOfElementLocated(By.id(actionBarId)));
 
-        // Get Budget page's name
-        String actualPageName = getPo().getWelement("actionBar")
-                .findElement(By.className(budgetPageNameClass)).getText();
+            // Get Budget page's name
+            String actualPageName = getPo().getWelement("actionBar")
+                    .findElement(By.className(budgetPageNameClass)).getText();
+            Assert.assertEquals(actualPageName, budgetPageName);
+        } else if (platformName.equals("iOS")) {
+            Assert.assertTrue(getPo().getWelement("actionBar").isDisplayed());
+        }
 
-        Assert.assertEquals(actualPageName, budgetPageName);
         System.out.println("Sign in with an account native test done");
     }
 }
