@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.WebPageObject;
 import setup.BaseTest;
@@ -15,9 +16,10 @@ public class webMobileTests extends BaseTest {
 
     protected WebPageObject googlePage;
 
+    @Parameters("ianaUrl")
     @Test(enabled = false, groups = {"web"}, description = "Make sure that we've opened IANA homepage")
-    public void simpleWebTest() throws InterruptedException {
-        getDriver().get("http://iana.org"); // open IANA homepage
+    public void simpleWebTest(String ianaUrl) throws InterruptedException {
+        getDriver().get(ianaUrl); // open IANA homepage
 
         // Make sure that page has been loaded completely
         new WebDriverWait(getDriver(), 10).until(
@@ -31,12 +33,13 @@ public class webMobileTests extends BaseTest {
         System.out.println("Site opening done");
     }
 
+    @Parameters("googleUrl")
     @Test(groups = {"web"}, description = "Google search test")
-    public void googleSearchWebTest() {
+    public void googleSearchWebTest(String googleUrl) {
 
         // Perform search
         googlePage = new WebPageObject(getDriver());
-        googlePage.openPage("http://google.com");
+        googlePage.openPage(googleUrl);
         googlePage.performSearch("EPAM");
 
         int numberOfRelatedResults = 0;
