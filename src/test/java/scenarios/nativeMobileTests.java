@@ -10,31 +10,10 @@ import setup.BaseTest;
 
 public class nativeMobileTests extends BaseTest {
 
-    @Test(priority = 0, groups = {"native"}, description = "This simple test just click on the Sign In button")
-    public void simpleNativeTest() throws IllegalAccessException, NoSuchFieldException, InstantiationException {
-        getPo().getWelement("signInBtn").click();
-        System.out.println("Simplest Android native test done");
-    }
-
-    @Parameters({"userEmail", "userName", "userPassword"})
-    @Test(priority = 1, groups = {"native"}, description = "Registering a new account")
-    public void RegisteringAccountNativeTest(String email, String userName, String userPassword)
-            throws IllegalAccessException, NoSuchFieldException, InstantiationException {
-
-        // Perform actions for registering an account
-        getPo().getWelement("regBtn").click();
-        getPo().getWelement("regEmailField").sendKeys(email);
-        getPo().getWelement("regUserNameField").sendKeys(userName);
-        getPo().getWelement("regPasswordField").sendKeys(userPassword);
-        getPo().getWelement("regConfirmPasswordField").sendKeys(userPassword);
-        getPo().getWelement("regNewAccBtn").click();
-        System.out.println("Registering a new Account native test done");
-    }
-
-    @Parameters({"userEmail", "userPassword", "budgetPageName", "actionBarId", "budgetPageNameClass"})
-    @Test(priority = 2, groups = {"native"}, description = "Sign in with a registered account")
-    public void SignInAccountNativeTest(String userEmail, String userPassword, String budgetPageName,
-                                        String actionBarId, String budgetPageNameClass)
+    @Parameters({"userEmail", "userPassword", "budgetPageName", "actionBarId"})
+    @Test(groups = {"native"}, description = "Sign in with a registered account")
+    public void SignInAccountNativeTest(String userEmail, String userPassword,
+                                        String budgetPageName, String actionBarId)
             throws IllegalAccessException, NoSuchFieldException, InstantiationException {
 
         // Perform signing in actions
@@ -47,8 +26,7 @@ public class nativeMobileTests extends BaseTest {
                 .until(ExpectedConditions.presenceOfElementLocated(By.id(actionBarId)));
 
         // Get Budget page's name
-        String actualPageName = getPo().getWelement("actionBar")
-                .findElement(By.className(budgetPageNameClass)).getText();
+        String actualPageName = getPo().getWelement("actionBarText").getText();
 
         Assert.assertEquals(actualPageName, budgetPageName);
         System.out.println("Sign in with an account native test done");
