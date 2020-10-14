@@ -22,15 +22,21 @@ public class BaseTest implements IDriver {
         return po;
     }
 
-    @Parameters({"platformName","appType","deviceName","browserName","app","udid"})
+    @Parameters({"platformName","appType","deviceName","browserName","app","udid",
+            "userEmail", "userName", "userPassword"})
     @BeforeSuite(alwaysRun = true)
     public void setUp(String platformName, String appType, String deviceName,
                       @Optional("") String browserName,
-                      @Optional("") String app, String udid) throws Exception {
+                      @Optional("") String app, String udid, String email,
+                      String userName, String userPassword) throws Exception {
         System.out.println("Before: app type - "+appType);
         setAppiumDriver(platformName, deviceName, browserName, app, udid);
         setPageObject(appType, appiumDriver);
 
+        // Perform registering a new account
+        if (appType.equals("native")) {
+            registerNewAccount(email, userName, userPassword);
+        }
     }
 
     @AfterSuite(alwaysRun = true)
@@ -60,12 +66,20 @@ public class BaseTest implements IDriver {
 
         // Timeouts tuning
         appiumDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
     }
 
     private void setPageObject(String appType, AppiumDriver appiumDriver) throws Exception {
         po = new PageObject(appType, appiumDriver);
     }
 
-
+    private void registerNewAccount(String email, String userName, String userPassword)
+            throws IllegalAccessException, NoSuchFieldException, InstantiationException {
+        getPo().getWelement("regBtn").click();
+        getPo().getWelement("regEmailField").sendKeys(email);
+        getPo().getWelement("regUserNameField").sendKeys(userName);
+        getPo().getWelement("regPasswordField").sendKeys(userPassword);
+        getPo().getWelement("regConfirmPasswordField").sendKeys(userPassword);
+        getPo().getWelement("regNewAccBtn").click();
+        System.out.println("New account has been registered");
+    }
 }
