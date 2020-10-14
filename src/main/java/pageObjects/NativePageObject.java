@@ -8,6 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 
 public class NativePageObject {
 
+    private static final String actionBarTextLocator =
+            "//android.view.ViewGroup[contains(@resource-id,'action_bar')]/*";
+
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
     WebElement signInBtn;
 
@@ -35,10 +38,14 @@ public class NativePageObject {
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_pwd")
     WebElement signInPasswordField;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[contains(@resource-id,'action_bar')]/*")
+    @AndroidFindBy(xpath = actionBarTextLocator)
     WebElement actionBarText;
 
     public NativePageObject(AppiumDriver appiumDriver) {
         PageFactory.initElements(new AppiumFieldDecorator(appiumDriver), this);
+    }
+
+    public static String getActionBarTextLocator() {
+        return actionBarTextLocator;
     }
 }
