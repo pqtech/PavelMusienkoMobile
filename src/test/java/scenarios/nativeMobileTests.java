@@ -6,14 +6,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pageObjects.NativePageObject;
 import setup.BaseTest;
 
 public class nativeMobileTests extends BaseTest {
 
-    @Parameters({"userEmail", "userPassword", "budgetPageName", "actionBarId"})
+    @Parameters({"userEmail", "userPassword", "budgetPageName"})
     @Test(groups = {"native"}, description = "Sign in with a registered account")
     public void SignInAccountNativeTest(String userEmail, String userPassword,
-                                        String budgetPageName, String actionBarId)
+                                        String budgetPageName)
             throws IllegalAccessException, NoSuchFieldException, InstantiationException {
 
         // Perform signing in actions
@@ -23,7 +24,8 @@ public class nativeMobileTests extends BaseTest {
 
         // Making sure that the Budged page has loaded
         new WebDriverWait(getDriver(), 1)
-                .until(ExpectedConditions.presenceOfElementLocated(By.id(actionBarId)));
+                .until(ExpectedConditions.presenceOfElementLocated(By
+                        .xpath(NativePageObject.getActionBarTextLocator())));
 
         // Get Budget page's name
         String actualPageName = getPo().getWelement("actionBarText").getText();
