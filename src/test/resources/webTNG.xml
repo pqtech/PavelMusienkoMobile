@@ -5,6 +5,8 @@
     <parameter name="udid" value="emulator-5554"></parameter>
     <parameter name="platformName" value="Android"></parameter>
     <parameter name="browserName" value="Chrome"></parameter>
+    <parameter name="ianaUrl" value="http://iana.org"></parameter>
+    <parameter name="googleUrl" value="http://google.com"></parameter>
     <test name="Web tests">
         <groups>
             <run>
