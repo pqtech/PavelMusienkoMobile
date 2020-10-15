@@ -1,10 +1,8 @@
 package pageObjects;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -12,14 +10,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class WebPageObject  {
+public class WebPageObject {
 
     protected AppiumDriver appiumDriver;
 
     @FindBy(xpath = "//input[@name='q']")
     WebElement searchField;
 
-    @FindBy(xpath = "//*[@id='rso']//div[@aria-level='3']")
+    @FindBy(xpath = "//div[@aria-level and not(@data-hveid)]/div")
     List<WebElement> searchResults;
 
     public WebPageObject(AppiumDriver appiumDriver) {
@@ -35,16 +33,13 @@ public class WebPageObject  {
         );
     }
 
-    public void performSearch(String searchString) {
-        searchField.sendKeys(searchString);
+    public List<WebElement> getSearchResults(String searchQuery) {
+        searchField.sendKeys(searchQuery);
         searchField.sendKeys(Keys.ENTER);
         // Make sure that page has been loaded completely
         new WebDriverWait(appiumDriver, 10).until(
                 wd -> ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete")
         );
-    }
-
-    public List<WebElement> getSearchResults() {
         return searchResults;
     }
 }
