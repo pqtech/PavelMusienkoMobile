@@ -32,15 +32,17 @@ public class BaseTest implements IDriver {
     @BeforeSuite(alwaysRun = true)
     public void setUp(String platformName, String appType, String deviceName,
                       @Optional("") String browserName,
-                      @Optional("") String app, String udid, String email,
-                      String userName, String userPassword) throws Exception {
+                      @Optional("") String app, String udid,
+                      @Optional("") String userEmail,
+                      @Optional("") String userName,
+                      @Optional("") String userPassword) throws Exception {
         System.out.println("Before: app type - " + appType);
         setAppiumDriver(platformName, deviceName, browserName, app, udid);
         setPageObject(appType, appiumDriver);
 
         // Perform registering a new account
         if (appType.equals("native")) {
-            registerNewAccount(email, userName, userPassword);
+            registerNewAccount(userEmail, userName, userPassword);
         }
     }
 
