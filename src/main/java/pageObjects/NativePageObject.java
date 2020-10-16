@@ -49,7 +49,7 @@ public class NativePageObject {
     WebElement signInPasswordField;
 
     @AndroidFindBy(xpath = actionBarTextLocator)
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeNavigationBar[@name='Budget']")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeNavigationBar/XCUIElementTypeOther")
     WebElement actionBarText;
 
     public NativePageObject(AppiumDriver appiumDriver) {
