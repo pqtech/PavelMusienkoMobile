@@ -30,7 +30,8 @@ public class BaseTest implements IDriver {
     @Parameters({"platformName", "appType", "deviceName", "browserName", "app", "udid",
             "userEmail", "userName", "userPassword", "appPackage", "appActivity", "bundleId"})
     @BeforeSuite(alwaysRun = true)
-    public void setUp(String platformName, String appType, String deviceName,
+    public void setUp(String platformName, String appType,
+                      @Optional("") String deviceName,
                       @Optional("") String browserName,
                       @Optional("") String app,
                       String udid,
