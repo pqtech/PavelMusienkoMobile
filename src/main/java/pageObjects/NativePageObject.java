@@ -9,6 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 
 public class NativePageObject {
 
+    private static final String actionBarTextLocator =
+            "//android.view.ViewGroup[contains(@resource-id,'action_bar')]/*";
+
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@label='Sign In']")
     WebElement signInBtn;
@@ -45,13 +48,15 @@ public class NativePageObject {
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeSecureTextField[@value='Required']")
     WebElement signInPasswordField;
 
-    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/action_bar")
+    @AndroidFindBy(xpath = actionBarTextLocator)
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeNavigationBar[@name='Budget']")
-    WebElement actionBar;
+    WebElement actionBarText;
 
     public NativePageObject(AppiumDriver appiumDriver) {
         PageFactory.initElements(new AppiumFieldDecorator(appiumDriver), this);
     }
 
-
+    public static String getActionBarTextLocator() {
+        return actionBarTextLocator;
+    }
 }

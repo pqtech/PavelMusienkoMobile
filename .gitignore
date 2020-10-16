@@ -2,5 +2,3 @@
 target/
 .allure/
 *.iml
-*.apk
-*.ipa

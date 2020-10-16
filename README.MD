@@ -10,7 +10,7 @@ cloudAndroidWebTNG.xml
 cloudIOSNativeTNG.xml  
 cloudIOSWebTNG.xml  
 3. Put your private EPAM Mobile Cloud token to pom.xml (element "token")  
-3. Use Maven in order to run tests:   
+4. Use Maven in order to run tests:   
 Cloud Android Native tests:  
 `mvn clean test -PcloudAndroidNative`  
 Cloud Android Web tests:  

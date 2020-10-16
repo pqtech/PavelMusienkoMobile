@@ -28,21 +28,27 @@ public class BaseTest implements IDriver {
     }
 
     @Parameters({"platformName", "appType", "deviceName", "browserName", "app", "udid",
-            "appPackage", "appActivity", "bundleId"})
+            "userEmail", "userName", "userPassword", "appPackage", "appActivity", "bundleId"})
     @BeforeSuite(alwaysRun = true)
-    public void setUp(String platformName, String appType,
-                      @Optional("") String deviceName,
+    public void setUp(String platformName, String appType, String deviceName,
                       @Optional("") String browserName,
                       @Optional("") String app,
-                      @Optional("") String udid,
+                      String udid,
+                      @Optional("") String userEmail,
+                      @Optional("") String userName,
+                      @Optional("") String userPassword,
                       @Optional("") String appPackage,
                       @Optional("") String appActivity,
-                      @Optional("") String bundleId
-    ) throws Exception {
+                      @Optional("") String bundleId) throws Exception {
         System.out.println("Before: app type - " + appType);
-        setAppiumDriver(platformName, deviceName, browserName, app, udid, appPackage, appActivity, bundleId);
+        setAppiumDriver(platformName, deviceName, browserName, app, udid,
+                appPackage, appActivity, bundleId);
         setPageObject(appType, appiumDriver);
 
+        // Perform registering a new account
+        if (appType.equals("native")) {
+            registerNewAccount(userEmail, userName, userPassword);
+        }
     }
 
     @AfterSuite(alwaysRun = true)
@@ -81,12 +87,20 @@ public class BaseTest implements IDriver {
 
         // Timeouts tuning
         appiumDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
     }
 
     private void setPageObject(String appType, AppiumDriver appiumDriver) throws Exception {
         po = new PageObject(appType, appiumDriver);
     }
 
-
+    private void registerNewAccount(String email, String userName, String userPassword)
+            throws IllegalAccessException, NoSuchFieldException, InstantiationException {
+        getPo().getWelement("regBtn").click();
+        getPo().getWelement("regEmailField").sendKeys(email);
+        getPo().getWelement("regUserNameField").sendKeys(userName);
+        getPo().getWelement("regPasswordField").sendKeys(userPassword);
+        getPo().getWelement("regConfirmPasswordField").sendKeys(userPassword);
+        getPo().getWelement("regNewAccBtn").click();
+        System.out.println("New account has been registered");
+    }
 }

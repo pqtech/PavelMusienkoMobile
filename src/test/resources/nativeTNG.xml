@@ -9,8 +9,6 @@
     <parameter name="userName" value="myTestUserName"></parameter>
     <parameter name="userPassword" value="12345test"></parameter>
     <parameter name="budgetPageName" value="BudgetActivity"></parameter>
-    <parameter name="actionBarId" value="platkovsky.alexey.epamtestapp:id/action_bar"></parameter>
-    <parameter name="budgetPageNameClass" value="android.widget.TextView"></parameter>
     <test name="Native tests">
         <groups>
             <run>

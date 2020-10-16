@@ -4,8 +4,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pageObjects.WebPageObject;
 import setup.BaseTest;
 
@@ -15,9 +16,10 @@ public class webMobileTests extends BaseTest {
 
     protected WebPageObject googlePage;
 
+    @Parameters("ianaUrl")
     @Test(enabled = false, groups = {"web"}, description = "Make sure that we've opened IANA homepage")
-    public void simpleWebTest() throws InterruptedException {
-        getDriver().get("http://iana.org"); // open IANA homepage
+    public void simpleWebTest(String ianaUrl) throws InterruptedException {
+        getDriver().get(ianaUrl); // open IANA homepage
 
         // Make sure that page has been loaded completely
         new WebDriverWait(getDriver(), 10).until(
@@ -31,27 +33,23 @@ public class webMobileTests extends BaseTest {
         System.out.println("Site opening done");
     }
 
+    @Parameters({"googleUrl", "searchQuery"})
     @Test(groups = {"web"}, description = "Google search test")
-    public void googleSearchWebTest() {
+    public void googleSearchWebTest(String googleUrl, String searchQuery) {
 
         // Perform search
         googlePage = new WebPageObject(getDriver());
-        googlePage.openPage("http://google.com");
-        googlePage.performSearch("EPAM");
+        googlePage.openPage(googleUrl);
+        List<WebElement> resultList = googlePage.getSearchResults(searchQuery);
 
-        int numberOfRelatedResults = 0;
-        List<WebElement> resultList = googlePage.getSearchResults();
-
-        // Count how many results we have got with a specified text
+        // SoftAssert for each search result
+        SoftAssert softAssert = new SoftAssert();
         for (WebElement element : resultList) {
-            if (element.getText().contains("EPAM")) {
-                numberOfRelatedResults++;
-            }
+            softAssert.assertTrue(element.getText().contains(searchQuery));
         }
 
-        // Assert if we have got enough related results
-        Assert.assertTrue(numberOfRelatedResults > 8);
+        // Assert search results
+        softAssert.assertAll();
         System.out.println("Opening a website and getting results done");
     }
-
 }

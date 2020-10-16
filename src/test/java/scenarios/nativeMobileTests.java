@@ -6,38 +6,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pageObjects.NativePageObject;
 import setup.BaseTest;
 
 public class nativeMobileTests extends BaseTest {
 
-    @Test(enabled = false, priority = 0, groups = {"native"},
-            description = "This simple test just click on the Sign In button")
-    public void simpleNativeTest() throws IllegalAccessException, NoSuchFieldException, InstantiationException {
-        getPo().getWelement("signInBtn").click();
-        System.out.println("Simplest Android native test done");
-    }
-
-    @Parameters({"userEmail", "userName", "userPassword"})
-    @Test(priority = 1, groups = {"native"}, description = "Registering a new account")
-    public void RegisteringAccountNativeTest(String email, String userName, String userPassword)
-            throws IllegalAccessException, NoSuchFieldException, InstantiationException {
-
-        // Perform actions for registering an account
-        getPo().getWelement("regBtn").click();
-        getPo().getWelement("regEmailField").sendKeys(email);
-        getPo().getWelement("regUserNameField").sendKeys(userName);
-        getPo().getWelement("regPasswordField").sendKeys(userPassword);
-        getPo().getWelement("regConfirmPasswordField").sendKeys(userPassword);
-        getPo().getWelement("regNewAccBtn").click();
-        System.out.println("Registering a new Account native test done");
-    }
-
-    @Parameters({"userEmail", "userPassword", "budgetPageName", "actionBarId",
-            "budgetPageNameClass", "platformName"})
-    @Test(priority = 2, groups = {"native"}, description = "Sign in with a registered account")
+    @Parameters({"userEmail", "userPassword", "budgetPageName"})
+    @Test(groups = {"native"}, description = "Sign in with a registered account")
     public void SignInAccountNativeTest(String userEmail, String userPassword,
-                                        String budgetPageName, String actionBarId,
-                                        String budgetPageNameClass, String platformName)
+                                        String budgetPageName, String platformName)
             throws IllegalAccessException, NoSuchFieldException, InstantiationException {
 
         // Perform signing in actions
@@ -48,11 +25,11 @@ public class nativeMobileTests extends BaseTest {
         if (platformName.equals("Android")) {
             // Making sure that the Budged page has loaded
             new WebDriverWait(getDriver(), 1)
-                    .until(ExpectedConditions.presenceOfElementLocated(By.id(actionBarId)));
+                    .until(ExpectedConditions.presenceOfElementLocated(By
+                            .xpath(NativePageObject.getActionBarTextLocator())));
 
             // Get Budget page's name
-            String actualPageName = getPo().getWelement("actionBar")
-                    .findElement(By.className(budgetPageNameClass)).getText();
+            String actualPageName = getPo().getWelement("actionBarText").getText();
             Assert.assertEquals(actualPageName, budgetPageName);
         } else if (platformName.equals("iOS")) {
             Assert.assertTrue(getPo().getWelement("actionBar").isDisplayed());
