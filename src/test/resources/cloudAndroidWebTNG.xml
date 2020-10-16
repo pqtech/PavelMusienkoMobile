@@ -1,9 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="EPAM Mobile Cloud Android Web testing Suite">
     <parameter name="appType" value="web"></parameter>
-    <parameter name="udid" value="89HY075AQ"></parameter>
+    <parameter name="udid" value="1cf85e98a10d7ece"></parameter>
     <parameter name="platformName" value="Android"></parameter>
     <parameter name="browserName" value="Chrome"></parameter>
+    <parameter name="ianaUrl" value="http://iana.org"></parameter>
+    <parameter name="googleUrl" value="http://google.com"></parameter>
+    <parameter name="searchQuery" value="EPAM"></parameter>
     <test name="Cloud Android Web tests">
         <groups>
             <run>
