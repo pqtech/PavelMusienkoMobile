@@ -1,15 +1,13 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Cloud iOS Native mobile testing Suite">
     <parameter name="appType" value="native"></parameter>
-    <parameter name="udid" value="7dcebe4c11aff5e5dbfbc56f9e5cd64a9ccb50db"></parameter>
+    <parameter name="udid" value="3e50758dd2e1179a014ee7b51dc4285d73118107"></parameter>
     <parameter name="platformName" value="iOS"></parameter>
     <parameter name="bundleId" value="com.epam.EPAMTestApp.ii"></parameter>
-    <parameter name="userEmail" value="myTestRandomEmail7@email.com"></parameter>
+    <parameter name="userEmail" value="myTestRandomEmail5@email.com"></parameter>
     <parameter name="userName" value="myTestUserName"></parameter>
     <parameter name="userPassword" value="12345test"></parameter>
     <parameter name="budgetPageName" value="Budget"></parameter>
-    <parameter name="actionBarId" value="platkovsky.alexey.epamtestapp:id/action_bar"></parameter>
-    <parameter name="budgetPageNameClass" value="android.widget.TextView"></parameter>
     <test name="Cloud iOS Native tests">
         <groups>
             <run>
